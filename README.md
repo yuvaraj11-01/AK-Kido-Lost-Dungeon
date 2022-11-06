@@ -1,2 +1,2 @@
 # Lost-man
- Craft and Collect NFTs. Thi project uses MetaFab SDK 
+ Craft and Collect NFTs. This project uses MetaFab SDK 
