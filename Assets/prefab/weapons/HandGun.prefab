@@ -102,7 +102,7 @@ MonoBehaviour:
   startPoint: {fileID: 6055574470949705962}
   impactForce: 0
   MagazenSize: 10
-  ReloadTime: 3
+  ReloadTime: 2
 --- !u!1 &6055574470949705963
 GameObject:
   m_ObjectHideFlags: 0

@@ -35,6 +35,16 @@ public class Shotgun : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!reload)
+            {
+                currentAmmo = 0;
+                Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+                Shoot(mousePosition, startPoint.position);
+                WeaponHUD.instance.SetAmmo(currentAmmo, MagazenSize);
+            }
+        }
         if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
@@ -61,10 +71,16 @@ public class Shotgun : MonoBehaviour
                 anim.SetTrigger("singleshot");
                 flash.SetActive(true);
 
+
                 ShootProjectile(shootPosition, gunEndPointPosition, 12);
+                ShootProjectile(shootPosition, gunEndPointPosition, 10);
+                ShootProjectile(shootPosition, gunEndPointPosition, 8);
                 ShootProjectile(shootPosition, gunEndPointPosition, 6);
-                ShootProjectile(shootPosition, gunEndPointPosition, 0);
+                ShootProjectile(shootPosition, gunEndPointPosition, 1);
+                ShootProjectile(shootPosition, gunEndPointPosition, -1);
                 ShootProjectile(shootPosition, gunEndPointPosition, -6);
+                ShootProjectile(shootPosition, gunEndPointPosition, -10);
+                ShootProjectile(shootPosition, gunEndPointPosition, -8);
                 ShootProjectile(shootPosition, gunEndPointPosition, -12);
 
 
@@ -105,7 +121,7 @@ public class Shotgun : MonoBehaviour
         shootDir = Quaternion.AngleAxis(angle, Vector3.forward) * shootDir;
 
         bulletTransform.transform.Rotate( new Vector3( 0,0,angle));
-        bulletTransform.GetComponent<Bullet>().Setup(shootDir, .25f);
+        bulletTransform.GetComponent<Bullet>().Setup(shootDir, .5f,damage:3);
     }
 
 

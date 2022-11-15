@@ -35,6 +35,16 @@ public class GatlingGun : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!reload)
+            {
+                currentAmmo = 0;
+                Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+                Shoot(mousePosition, startPoint.position);
+                WeaponHUD.instance.SetAmmo(currentAmmo, MagazenSize);
+            }
+        }
         if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
@@ -50,6 +60,7 @@ public class GatlingGun : MonoBehaviour
                 }
             }
         }
+
     }
 
     public void Shoot(Vector3 gunEndPointPosition, Vector3 shootPosition)
@@ -96,7 +107,7 @@ public class GatlingGun : MonoBehaviour
         shootDir = Quaternion.AngleAxis(angle, Vector3.forward) * shootDir;
 
         bulletTransform.transform.Rotate(new Vector3(0, 0, angle));
-        bulletTransform.GetComponent<Bullet>().Setup(shootDir, .5f,enableTrail: true);
+        bulletTransform.GetComponent<Bullet>().Setup(shootDir, 5f,enableTrail: true);
 
         currentAmmo--;
     }

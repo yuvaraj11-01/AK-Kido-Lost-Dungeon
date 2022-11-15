@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class EnemyBehaviour : MonoBehaviour
 {
+    public static int score = 0;
+    public static bool ended = false;
+
+    public static void ResetCount()
+    {
+        score = 0;
+    }
+
 
     public float speed;
     public Transform target;
     public float minimumDistance;
     [SerializeField] GameObject Coin;
+    [SerializeField] int RewardScore;
 
     protected Animator anim;
     SpriteRenderer enemyVisual;
@@ -67,9 +76,18 @@ public class EnemyBehaviour : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public virtual void OnDestroy()
     {
         Instantiate(Coin, transform.position, Quaternion.identity);
+        if (!ended)
+        {
+            score += RewardScore;
+
+            LevelHUD.instance.UpdateScore(score);
+
+        }
+
+        Debug.Log("dead "+ gameObject.name);
     }
 
 }

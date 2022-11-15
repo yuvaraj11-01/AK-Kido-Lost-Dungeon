@@ -17,6 +17,7 @@ public class Coin : MonoBehaviour
         {
             Collected++;
             Destroy(gameObject);
+            LevelHUD.instance.UpdateCoins(Collected);
         }
     }
 

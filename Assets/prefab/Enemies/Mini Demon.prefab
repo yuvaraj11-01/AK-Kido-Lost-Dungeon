@@ -186,6 +186,7 @@ MonoBehaviour:
   target: {fileID: 0}
   minimumDistance: 0.1
   Coin: {fileID: 7497793824880425043, guid: 0b66ea0ecf2610e4681aad411cd166c3, type: 3}
+  RewardScore: 5
   player:
     serializedVersion: 2
     m_Bits: 512
@@ -202,7 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8923a0edca5ae8b45a78d02ceb9d6c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 2
+  maxHealth: 10
   useHud: 0
 --- !u!61 &1296480874126604067
 BoxCollider2D:

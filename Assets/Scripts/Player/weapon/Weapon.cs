@@ -35,6 +35,16 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!reload)
+            {
+                currentAmmo = 0;
+                Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+                Shoot(mousePosition, startPoint.position);
+                WeaponHUD.instance.SetAmmo(currentAmmo, MagazenSize);
+            }
+        }
         if (Input.GetMouseButton(0))
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();

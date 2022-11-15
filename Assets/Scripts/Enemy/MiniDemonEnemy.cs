@@ -82,18 +82,20 @@ public class MiniDemonEnemy : EnemyBehaviour
         }
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
+        base.OnDestroy();
         CinemachineShake.Instance.ShakeCamera(5f, .2f);
 
-        var vfx = Instantiate(explosionvfx,transform.position, Quaternion.identity);
-        GameObject.Destroy(vfx,1f);
+        var vfx = Instantiate(explosionvfx, transform.position, Quaternion.identity);
+        GameObject.Destroy(vfx, 1f);
         var targetCol = Physics2D.OverlapCircleAll(transform.position, Damagerange);
         foreach (var target in targetCol)
         {
-            var hp =target.GetComponent<Health>();
-            if (hp) hp.DealDamage(2);
+            var hp = target.GetComponent<Health>();
+            if (hp) hp.DealDamage(5);
         }
         // deal area damage
     }
+
 }

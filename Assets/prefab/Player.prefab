@@ -5252,6 +5252,9 @@ MonoBehaviour:
   speed: 3
   DashForce: 500
   dust: {fileID: 9159608531603983543}
+  GameOver: {fileID: 0}
+  back: {fileID: 0}
+  coins: {fileID: 0}
   canMove: 1
 --- !u!50 &9159608532958238661
 Rigidbody2D:
@@ -5305,7 +5308,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8923a0edca5ae8b45a78d02ceb9d6c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 4
+  maxHealth: 50
   useHud: 1
 --- !u!1 &9159608533007601677
 GameObject:

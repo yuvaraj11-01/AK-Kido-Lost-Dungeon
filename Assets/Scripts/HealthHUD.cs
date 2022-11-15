@@ -10,31 +10,37 @@ public class HealthHUD : MonoBehaviour
 
     public static HealthHUD instance;
 
+    [SerializeField] List<Image> hearts = new List<Image> ();
+
     private void Awake()
     {
         instance = this;
     }
 
-    public void SetHealth(int count)
+    public void SetHealth(float cHealth)
     {
-        switch (count)
+        Debug.Log(cHealth);
+        float count = cHealth / 10;
+        Debug.Log(count);
+
+        int x = 0;
+
+        foreach (var item in hearts)
         {
-            case 0:
-                heart1.sprite = Empty; heart2.sprite = Empty;
-                break;
-            case 1:
-                heart1.sprite = Empty; heart2.sprite = Half;
-                break;
-            case 2:
-                heart1.sprite = Empty; heart2.sprite = Full;
-                break;
-            case 3:
-                heart1.sprite = Half; heart2.sprite = Full;
-                break;
-            case 4:
-                heart1.sprite = Full; heart2.sprite = Full;
-                break;
+            item.sprite = Empty;
         }
+
+        while (count >.5f)
+        {
+            hearts[x].sprite = Full;
+            x++;
+            count--;
+        }
+        Debug.Log(count);
+
+        if (count == .5f)
+            hearts[x].sprite = Half;
+
     }
 
 }

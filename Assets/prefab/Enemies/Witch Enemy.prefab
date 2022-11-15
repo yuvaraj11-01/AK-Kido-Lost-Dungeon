@@ -83,6 +83,7 @@ MonoBehaviour:
   target: {fileID: 0}
   minimumDistance: 4
   Coin: {fileID: 7497793824880425043, guid: 0b66ea0ecf2610e4681aad411cd166c3, type: 3}
+  RewardScore: 15
 --- !u!210 &4761808180297288612
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -127,7 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8923a0edca5ae8b45a78d02ceb9d6c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 4
+  maxHealth: 20
   useHud: 0
 --- !u!61 &1352451027833837442
 BoxCollider2D:

@@ -18,9 +18,11 @@ public class Health : MonoBehaviour
 
     public void DealDamage(int amount)
     {
-        if(currentHealth >= amount)
+        //if(currentHealth >= amount)
         {
             currentHealth -= amount;
+
+            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
             if (useHud)
             {
@@ -37,5 +39,8 @@ public class Health : MonoBehaviour
 
         }
     }
+
+
+
 
 }

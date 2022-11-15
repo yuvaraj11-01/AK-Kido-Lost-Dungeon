@@ -10,7 +10,7 @@ public class Movement : MonoBehaviour
     [SerializeField] float DashForce;
     [SerializeField] ParticleSystem dust;
     [SerializeField] GameObject GameOver,back;
-    [SerializeField] UnityEngine.UI.Text coins;
+    [SerializeField] UnityEngine.UI.Text coins, Score;
     Camera cam;
 
 
@@ -31,6 +31,11 @@ public class Movement : MonoBehaviour
         anim = GetComponent<Animator>();
         cam = Camera.main;
 
+    }
+
+    private void Start()
+    {
+        EnemyBehaviour.ended = false;
     }
 
     void Update()
@@ -74,12 +79,35 @@ public class Movement : MonoBehaviour
     {
         GameOver.SetActive(true);
         coins.text = Coin.Collected.ToString();
-
-        MetafabManager.MintCurrency(Coin.Collected, () =>
+        Score.text = EnemyBehaviour.score.ToString();
+        Debug.Log(EnemyBehaviour.score);
+        if (Coin.Collected > 0)
         {
-            Coin.ResetCount();
-            back.SetActive(true);
-        });
+            MetafabManager.MintCurrency(Coin.Collected, () =>
+            {
+                back.SetActive(true);
+            });
+        }
+        if (EnemyBehaviour.score > 0)
+        {
+            MetafabManager.GetPlayerData((res) =>
+            {
+                var sc = res.Score;
+                if (sc == null) sc = "0";
+                Debug.Log(sc);
+                if (EnemyBehaviour.score > int.Parse(sc))
+                {
+                    MetafabManager.SetPlayerData(new ProtectedPlayerData() { Score = EnemyBehaviour.score.ToString(), WeaponEquipedID = "" });
+                }
+            });
+        }
+        Coin.ResetCount();
+        Debug.Log(Coin.Collected);
+
+        EnemyBehaviour.ResetCount();
+        EnemyBehaviour.ended = true;
+
+        Debug.Log(EnemyBehaviour.score);
 
     }
 

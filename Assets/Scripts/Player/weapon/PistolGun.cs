@@ -34,6 +34,16 @@ public class PistolGun : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if (!reload)
+            {
+                currentAmmo = 0;
+                Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();
+                Shoot(mousePosition, startPoint.position);
+                WeaponHUD.instance.SetAmmo(currentAmmo, MagazenSize);
+            }
+        }
         if (Input.GetMouseButtonDown(0))
         {
             Vector3 mousePosition = UtilsClass.GetMouseWorldPosition();

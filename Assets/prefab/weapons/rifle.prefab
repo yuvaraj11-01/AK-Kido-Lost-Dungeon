@@ -128,7 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   flash: {fileID: 4664212743012718092}
-  fireRate: 0.3
+  fireRate: 0.25
   projectile: {fileID: 1209487050334965440, guid: a7e1b0a7948e2714eaa8fda9376f10f7, type: 3}
   startPoint: {fileID: 4143558477567425988}
   impactForce: 5

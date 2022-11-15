@@ -133,7 +133,7 @@ MonoBehaviour:
   startPoint: {fileID: 3228508188212672307}
   bulletSpeed: 30
   MagazenSize: 10
-  ReloadTime: 4
+  ReloadTime: 2
 --- !u!1 &3228508188957877335
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ public class Bullet : MonoBehaviour {
     [SerializeField] GameObject trail;
     [SerializeField] Transform impactPos;
 
-    public void Setup(Vector3 shootDir,float duration,float moveSpeed = 10,bool enableTrail = false,int damage=1,bool canDestroy= true) {
+    public void Setup(Vector3 shootDir,float duration,float moveSpeed = 10,bool enableTrail = false,int damage=5,bool canDestroy= true) {
         this.shootDir = shootDir;
         this.moveSpeed = moveSpeed;
         this.damage = damage;

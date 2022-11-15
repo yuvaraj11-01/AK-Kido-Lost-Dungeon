@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using System.Linq;
 
 public class MetafabManager 
 {
@@ -121,16 +122,35 @@ public class MetafabManager
         }
     }
 
-    public static void GetPlayerData()
+    public static void GetPlayerData(Action<ProtectedPlayerData> callback,string ID = null)
     {
         var apiInstance = new PlayersApi(Configuration.Default);
-        var playerId = StaticPlayerData.playerID; 
+        var playerId = "";
+        if (string.IsNullOrEmpty(ID))
+        {
+            playerId = StaticPlayerData.playerID;
+        }
+        else
+        {
+            playerId = ID;
+        }
 
         try
         {
             // Get player data
             GetPlayerData200Response result = apiInstance.GetPlayerData(playerId);
-            Debug.Log(result);
+            var Data = result.ProtectedData;
+            if (Data != null)
+            {
+                Debug.Log(result.ProtectedData.ToString());
+                var newData = JsonUtility.FromJson<ProtectedPlayerData>(result.ProtectedData.ToString());
+                if (string.IsNullOrEmpty(newData.Score)) newData.Score = "0";
+                callback?.Invoke(newData);
+            }
+            else
+            {
+                callback?.Invoke(new ProtectedPlayerData() { Score = "0", WeaponEquipedID="0"});
+            }
         }
         catch (ApiException e)
         {
@@ -138,6 +158,27 @@ public class MetafabManager
             Debug.Log("Status Code: " + e.ErrorCode);
             Debug.Log(e.StackTrace);
         }
+    }
+
+    static void GetAllPlayers(Action<List<PublicPlayer>> callback)
+    {
+        var apiInstance = new PlayersApi(Configuration.Default);
+        var xAuthorization = game_SK;  // string | The `secretKey` of the authenticating game.
+
+        try
+        {
+            // Get players
+            List<PublicPlayer> result = apiInstance.GetPlayers(xAuthorization);
+            Debug.Log(result);
+            callback?.Invoke(result);
+        }
+        catch (ApiException e)
+        {
+            Debug.Log("Exception when calling PlayersApi.GetPlayers: " + e.Message);
+            Debug.Log("Status Code: " + e.ErrorCode);
+            Debug.Log(e.StackTrace);
+        }
+
     }
 
 
@@ -413,6 +454,46 @@ public class MetafabManager
 
     #endregion
 
+    #region Leaderboard
+
+    public static void GetLeaderboard(int Length,Action<List<LeaderBoardPlayerData>> callback)
+    {
+        // - Get all players
+        //      - Get player protected Data
+        //          - read score
+        //- sort players
+        //      - return players = length
+
+
+
+        List< LeaderBoardPlayerData> players = new List<LeaderBoardPlayerData>();
+
+        GetAllPlayers((res) =>
+        {
+            foreach (var player in res)
+            {
+                if (!player.Username.Contains("Dev"))
+                {
+                    GetPlayerData((Data) =>
+                    {
+                        players.Add(new LeaderBoardPlayerData() { playerName = player.Username, Score = int.Parse(Data.Score) });
+                    }, player.Id);
+                }
+            }
+        });
+
+        var Sorted =(from e in players orderby e.Score select e).ToList();
+        Sorted.Reverse();
+        /*foreach (var player in Sorted)
+        {
+            Debug.Log(player.playerName + " : " + player.Score);
+        }*/
+        callback?.Invoke(Sorted.GetRange(0, Length));
+
+    }
+
+    #endregion
+
 }
 
 #region Static PlayerData
@@ -437,6 +518,12 @@ public struct CollectionItem
 {
     public int ID;
     public int count;
+}
+
+public class LeaderBoardPlayerData
+{
+    public string playerName;
+    public int Score;
 }
 
 #endregion
