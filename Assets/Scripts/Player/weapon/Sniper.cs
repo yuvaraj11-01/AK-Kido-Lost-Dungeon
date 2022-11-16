@@ -103,6 +103,6 @@ public class Sniper : MonoBehaviour
         Transform bulletTransform = Instantiate(projectile, gunEndPointPosition, Quaternion.identity);
 
         Vector3 shootDir = (shootPosition - gunEndPointPosition).normalized;
-        bulletTransform.GetComponent<Bullet>().Setup(shootDir, 5f, bulletSpeed,true,2,false);
+        bulletTransform.GetComponent<Bullet>().Setup(shootDir, 5f, bulletSpeed,true,10,false);
     }
 }
